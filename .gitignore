@@ -43,3 +43,6 @@ vignettes/*.pdf
 
 # Map data
 data/map
+
+# Testing user scripts
+R/test.R
