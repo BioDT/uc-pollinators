@@ -1,16 +1,19 @@
 # Load libraries -----
 library(nlrx)
+library(jsonlite)
+
+# Prepare input parameters ----
+args <- commandArgs(trailingOnly = TRUE)
+user_params <- args[1] |>
+  jsonlite::parse_json(simplifyVector = TRUE)
 
 # Set JAVA and NetLogo paths ----
-# To be hardcoded at given infrastructure
-Sys.setenv(JAVA_HOME = "/Users/martinovic/beehave/jdk-17.0.6.jdk/Contents/Home/")
-netlogopath <- file.path("/Users/martinovic/beehave/NetLogo 6.2.0")
-modelpath <-
-  file.path(getwd(),
-            "data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo")
+Sys.setenv(JAVA_HOME = args[2])
+netlogopath <- args[3]
+modelpath <- args[4]
 
 # Create nl object which hold info on NetLogo version and model path.
-nl <- nl(
+nl <- nlrx::nl(
   nlversion = "6.2.0",
   nlpath = netlogopath,
   modelpath = modelpath,
@@ -19,6 +22,12 @@ nl <- nl(
 
 # Set default parameter values ----
 params <- list(
+  experiment_name = "Exp1",
+  repetition = 1,
+  tickmetrics = "true",
+  idsetup = "setup",
+  idgo = "go",
+  runtime = 732,
   outpath = file.path(getwd(), "data/output/Result_table.csv"),
   metrics = c(
     "TotalIHbees + TotalForagers",
@@ -38,33 +47,29 @@ params <- list(
   nseeds = 1
 )
 
-# Prepare input parameters ----
-# user_params <- commandArgs(trailingOnly = TRUE) |>
-#   read_json(simplifyVector = TRUE)
-
 # Rewrite default parameters by user defined ----
-# params[names(user_params)] <- user_params
+params[names(user_params)] <- user_params
 
 # Define experiment ----
-nl@experiment <- experiment(
-  expname = "Test1",
+nl@experiment <- nlrx::experiment(
+  expname = params$experiment_name,
   outpath = params$outpath,
-  repetition = 4,
-  tickmetrics = "true",
-  idsetup = "setup",
-  idgo = "go",
-  runtime = 732,
+  repetition = params$repetition,
+  tickmetrics = params$tickmetrics,
+  idsetup = params$idsetup,
+  idgo = params$idgo,
+  runtime = params$runtime,
   variables = params$variables,
   constants = params$constants,
   metrics = params$metrics
 )
 
 # Experiment design ----
-nl@simdesign <- simdesign_distinct(nl = nl,
+nl@simdesign <- nlrx::simdesign_distinct(nl = nl,
                                    nseeds = params$nseeds)
 
 # Run experiment ----
-results <- run_nl_all(nl = nl)
+results <- nlrx::run_nl_all(nl = nl)
 
 # Store results ----
 write.table(results, file = params$outpath, sep = ",")
