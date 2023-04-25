@@ -47,3 +47,6 @@ data/map.zip
 
 # Testing user scripts
 R/test.R
+
+# Slurm output
+slurm-*.out
