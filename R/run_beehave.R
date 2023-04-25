@@ -7,16 +7,11 @@ args <- commandArgs(trailingOnly = TRUE)
 user_params <- args[1] |>
   jsonlite::parse_json(simplifyVector = TRUE)
 
-# Set JAVA and NetLogo paths ----
-Sys.setenv(JAVA_HOME = args[2])
-netlogopath <- args[3]
-modelpath <- args[4]
-
 # Create nl object which hold info on NetLogo version and model path.
 nl <- nlrx::nl(
-  nlversion = "6.2.0",
-  nlpath = netlogopath,
-  modelpath = modelpath,
+  nlversion = Sys.getenv("NETLOGO_VERSION"),
+  nlpath = file.path(Sys.getenv("NETLOGO_HOME")),
+  modelpath = file.path(Sys.getenv("MODEL_PATH")),
   jvmmem = 1024
 )
 
