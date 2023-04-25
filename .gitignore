@@ -50,3 +50,6 @@ R/test.R
 
 # Slurm output
 slurm-*.out
+
+# Singularity image
+*.sif
