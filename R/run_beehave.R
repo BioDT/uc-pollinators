@@ -23,7 +23,7 @@ params <- list(
   idsetup = "setup",
   idgo = "go",
   runtime = 732,
-  outpath = file.path(getwd(), "data/output/Result_table.csv"),
+  outpath = file.path("data/output/Result_table.csv"),
   metrics = c(
     "TotalIHbees + TotalForagers",
     "(honeyEnergyStore / ( ENERGY_HONEY_per_g * 1000 ))",
