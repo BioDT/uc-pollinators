@@ -48,8 +48,10 @@ data/map.zip
 # Testing user scripts
 R/test.R
 
-# Slurm output
+# Run outputs
 slurm-*.out
+*.stdout
+*.stderr
 
 # Singularity image
 *.sif
