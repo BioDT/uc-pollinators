@@ -5,9 +5,6 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:15:00
 
-date
-echo $SLURM_JOB_ID
-
 # Use correct file paths here
 MODEL_PATH="data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
 SIF="beehave_0.3.1.sif"
@@ -17,6 +14,9 @@ JSON_INPUT_PATH="data/single_execution.json"
 ####################################
 # No need to edit the lines below
 ####################################
+
+date
+echo $SLURM_JOB_ID
 
 # NetLogo pollutes home directory with .java and .netlogo directories, so
 # we use a temporary home directory in singularity
@@ -35,5 +35,5 @@ export MODEL_PATH
 
 # Run nlrx
 singularity exec --home "$TMP_HOME" --bind "$PWD" "$SIF" Rscript "$RSCRIPT" "$(cat $JSON_INPUT_PATH)"
-date
 
+date
