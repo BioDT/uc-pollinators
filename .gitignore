@@ -55,3 +55,6 @@ slurm-*.out
 
 # Singularity image
 *.sif
+
+# HyperQueue binary
+bin/hq
