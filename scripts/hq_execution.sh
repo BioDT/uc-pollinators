@@ -2,9 +2,10 @@
 
 ml R
 
-JAVA_HOME="/scratch/project/open-27-31/jdk-17.0.5"
-NETLOGO_HOME="/scratch/project/open-27-31/NetLogo 6.2.0"
-MODEL_PATH="/scratch/project/open-27-31/uc-beehave-execution-scripts/data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
+export JAVA_HOME="/scratch/project/open-27-31/jdk-17.0.5"
+export NETLOGO_HOME="/scratch/project/open-27-31/NetLogo 6.2.0"
+export NETLOGO_VERSION="6.2.0"
+export MODEL_PATH="data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
 
-Rscript R/run_beehave.R "${HQ_ENTRY}" "$JAVA_HOME" "$NETLOGO_HOME" "$MODEL_PATH"
+Rscript R/run_beehave.R "${HQ_ENTRY}"
 
