@@ -1,4 +1,4 @@
-# Libraries
+# Libraries ----
 library(terra)
 library(sf)
 library(dplyr)
@@ -14,14 +14,14 @@ library(rdwd)
 #                    Nectar and Pollen Data
 # (using package terra, sf, dplyr, lubridate and rdwd)
 
-BeehaveInput <- function(LSCMap, BeeLocation, NPData, PolygonSize=200000){
+BeehaveInput <- function(LSCMap, BeeLocation, NPData, PolygonSize=200000, buffer_size = 5000){
   
   ## 01 clip map to location and relevant crop types ##
   # extract Coordinate Reference System
   RefCRS <- crs(LSCMap, parse = FALSE)
   
   # create buffer around Beehave Locations...
-  clipBuffer <- buffer(BeeLocation, width = 1500)
+  clipBuffer <- buffer(BeeLocation, width = 5000)
   
   # ... and clip raster to buffer
   LocationArea <- crop(LSCMap, clipBuffer)
