@@ -46,4 +46,17 @@ data/map
 
 # Testing user scripts
 R/test.R
+
+# Generated input data folder
 data/locations/
+
+# Run outputs
+slurm-*.out
+*.stdout
+*.stderr
+
+# Singularity image
+*.sif
+
+# HyperQueue binary
+bin/hq
