@@ -20,7 +20,7 @@ user_params <- args[1] |>
 # x - latitude in EPSG:25832 CRS
 # y - longitude in EPSG:25832 CRS
 # buffer_size - size of the buffer around points (area size in map units, typically meters)
-# temp_path - path to temp directory where to store inputs for computation
+# location_path - path to temp directory where to store inputs for computation
 # input_tif_path - path to input tif file 
 # nectar_pollen_lookup_path - path to NectarPollenLookUp.csv
 
@@ -68,7 +68,7 @@ input_All <- input_patches %>% group_by(day) %>%
 # Write files ----
 write.table(
   input_All,
-  paste0(user_params$temp_path, "/input_", user_params$id, ".txt"),
+  paste0(user_params$location_path, "/input_", user_params$id, ".txt"),
   sep = " ",
   row.names = FALSE
 )
@@ -78,7 +78,7 @@ WeatherOutput <- WeatherDataInput(BeeLocation)
 
 write.table(
   WeatherOutput[2],
-  paste0(user_params$temp_path, "/weather_", user_params$id, ".txt"),
+  paste0(user_params$location_path, "/weather_", user_params$id, ".txt"),
   quote = F,
   row.names = F,
   col.names = F

@@ -22,7 +22,7 @@ params <- list(
   tickmetrics = "true",
   idsetup = "setup",
   idgo = "go",
-  runtime = 732,
+  runtime = 365*3,
   outpath = file.path("data/output/Result_table.csv"),
   metrics = c(
     "TotalIHbees + TotalForagers",
@@ -30,8 +30,8 @@ params <- list(
     "PollenStore_g"
   ),
   variables = list(
-    "N_INITIAL_BEES" = list(values = c(10000, 10000, 10000)),
-    "MAX_HONEY_STORE_kg" = list(values = c(50, 50, 50))
+    "N_INITIAL_BEES" = list(values = c(10000)),
+    "MAX_HONEY_STORE_kg" = list(values = c(50))
   ),
   constants = list(
     # Syntax von Matthias Spangenberg, die funktioniert!
