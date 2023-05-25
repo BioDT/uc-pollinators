@@ -22,7 +22,7 @@ if (Sys.getenv("TEMP_PATH") == "") {
 } else {
   temp_path <- Sys.getenv("TEMP_PATH")
 }
-output_path <- file.path(temp_path, "output")
+output_path <- file.path(prepath, "data/output")
 location_path <- file.path(temp_path, "locations")
 
 # Define other parameters
