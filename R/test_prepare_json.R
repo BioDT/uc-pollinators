@@ -16,7 +16,7 @@ input_tif_path <-
 locations_path <-
   file.path(prepath , "data/locations/germany_grid_10km_label_cut.dbf")
 nectar_pollen_lookup_path <-
-  file.path(prepath , "data/input/Preidl_lookup_table.csv")
+  file.path(prepath , "data/input/NectarPollenLookUp.csv")
 if (Sys.getenv("TEMP_PATH") == "") {
   temp_path <- file.path(prepath, "data/input")
 } else {
