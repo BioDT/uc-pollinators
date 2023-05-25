@@ -48,7 +48,7 @@ data/map
 R/test.R
 
 # Generated input data folder
-data/locations/
+data/locations/*.txt
 
 # Run outputs
 slurm-*.out
