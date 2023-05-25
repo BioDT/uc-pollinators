@@ -113,5 +113,5 @@ netlogo_list <- apply(
   }
 )
 
-jsonlite::write_json(output_list,
+jsonlite::write_json(netlogo_list,
                      path = file.path(temp_path, "netlogo.json"))
