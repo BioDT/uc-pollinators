@@ -25,7 +25,7 @@ mkdir -p $TMP_HOME/.java/.userPrefs
 # Remove temporary home directory at exit
 # Note: One could do "rm -rf $TMP_HOME", but we don't do it as a safeguard in case
 # someone would modify TMP_HOME to be the real home and get everything erased there
-trap "rm -r $TMP_HOME/.java $TMP_HOME/.netlogo; rmdir $TMP_HOME" EXIT
+trap "rm -rf $TMP_HOME/.java $TMP_HOME/.netlogo; rmdir $TMP_HOME" EXIT
 
 # Make model path env variable visible in Rscript
 export MODEL_PATH
