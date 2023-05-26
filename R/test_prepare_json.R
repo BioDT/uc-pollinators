@@ -103,8 +103,8 @@ netlogo_list <- apply(
         "MAX_HONEY_STORE_kg" = list(values = c(50))
       ),
       constants = list(
-        "INPUT_FILE" = paste0("\"", location_path, "/input_", x[[1]], ".txt\""),
-        "WeatherFile" = paste0("\"", location_path, "/weather_", x[[1]], ".txt\"")
+        "INPUT_FILE" = paste0("\"", gsub('^data/', '', location_path), "/input_", x[[1]], ".txt\""),
+        "WeatherFile" = paste0("\"", gsub('^data/', '', location_path), "/weather_", x[[1]], ".txt\"")
       ),
       nseeds = 1
     )

@@ -45,8 +45,8 @@ params <- list(
 # Rewrite default parameters by user defined ----
 params[names(user_params)] <- user_params
 
-stopifnot(file.exists(gsub('^.|.$', '', params$constants$INPUT_FILE)))
-stopifnot(file.exists(gsub('^.|.$', '', params$constants$WeatherFile)))
+stopifnot(file.exists(file.path("data", gsub('^.|.$', '', params$constants$INPUT_FILE))))
+stopifnot(file.exists(file.path("data", gsub('^.|.$', '', params$constants$WeatherFile))))
 
 # Define experiment ----
 nl@experiment <- nlrx::experiment(
