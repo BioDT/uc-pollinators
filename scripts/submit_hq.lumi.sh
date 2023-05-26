@@ -5,9 +5,14 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --time=00:15:00
 
+RSCRIPT=$1
+HQ_JSON_INPUT_PATH=$2
+
 # Use correct file paths here
 RUN="./scripts/run.lumi.sh"
-HQ_JSON_INPUT_PATH="data/hq_execution.json"
+
+# Make RSCRIPT visible for runner script
+export RSCRIPT
 
 # Add hq to PATH
 export PATH="$PWD/bin:$PATH"
