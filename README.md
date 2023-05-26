@@ -52,5 +52,5 @@ mkdir -p data/input/locations
 mkdir -p data/output
 
 sbatch -J prepare -N 10 -t 1:00:00 scripts/submit_hq.lumi.sh R/prepare_input.R data/input/locations.json
-sbatch -J run     -N 10 -t 1:00:00 scripts/submit_hq.lumi.sh R/run_beehave.R   data/input/netlogo.json
+sbatch -J run     -N 10 -t 0:15:00 scripts/submit_hq.lumi.sh R/run_beehave.R   data/input/netlogo.json
 ```
