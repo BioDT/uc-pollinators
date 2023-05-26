@@ -17,8 +17,8 @@
             }
         },
         "constants": {
-            "INPUT_FILE": ["\"Input_Clustertest/input_402.txt\""],
-            "WeatherFile": ["\"Input_Clustertest/weather_402.txt\""]
+            "INPUT_FILE": ["\"data/Input_Clustertest/input_402.txt\""],
+            "WeatherFile": ["\"data/Input_Clustertest/weather_402.txt\""]
         },
         "nseeds": [1]
     },
@@ -40,8 +40,8 @@
             }
         },
         "constants": {
-            "INPUT_FILE": ["\"Input_Clustertest/input_415.txt\""],
-            "WeatherFile": ["\"Input_Clustertest/weather_415.txt\""]
+            "INPUT_FILE": ["\"data/Input_Clustertest/input_415.txt\""],
+            "WeatherFile": ["\"data/Input_Clustertest/weather_415.txt\""]
         },
         "nseeds": [1]
     }
