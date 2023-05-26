@@ -51,3 +51,7 @@ hq submit --from-json "$HQ_JSON_INPUT_PATH" \
 hq job wait all
 hq worker stop all
 hq server stop
+
+# Zip all stderr and stdout
+zip hq-${SLURM_JOB_ID}.stderrout.zip hq-${SLURM_JOB_ID}-*.std{err,out}
+rm hq-${SLURM_JOB_ID}-*.std{err,out}
