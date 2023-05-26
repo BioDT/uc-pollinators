@@ -35,7 +35,7 @@ Standard output will come to file `slurm-*.out`.
 
 Example script:
 ```bash
-sbatch scripts/submit_hq.lumi.sh
+sbatch scripts/submit_hq.lumi.sh R/run_beehave.R data/hq_execution.json
 ```
 Standard output will come to files `hq-*.stdout`.
 
