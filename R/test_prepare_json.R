@@ -7,22 +7,20 @@ library(jsonlite)
 # Define parameters ----
 
 # Define paths
-prepath <- getwd()
 input_tif_path <-
   file.path(
-    prepath ,
     "data/map/preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif"
   )
 locations_path <-
-  file.path(prepath , "data/locations/germany_grid_10km_label_cut.dbf")
+  file.path("data/locations/germany_grid_10km_label_cut.dbf")
 nectar_pollen_lookup_path <-
-  file.path(prepath , "data/input/NectarPollenLookUp.csv")
+  file.path("data/input/NectarPollenLookUp.csv")
 if (Sys.getenv("TEMP_PATH") == "") {
-  temp_path <- file.path(prepath, "data/input")
+  temp_path <- file.path("data/input")
 } else {
   temp_path <- Sys.getenv("TEMP_PATH")
 }
-output_path <- file.path(prepath, "data/output")
+output_path <- file.path("data/output")
 location_path <- file.path(temp_path, "locations")
 
 # Define other parameters
