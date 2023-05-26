@@ -39,3 +39,18 @@ sbatch scripts/submit_hq.lumi.sh
 ```
 Standard output will come to files `hq-*.stdout`.
 
+
+### Demo
+
+```bash
+export TMP_HOME=`mktemp -d -p /tmp`
+mkdir -p $TMP_HOME/.java/.userPrefs
+
+singularity exec --home "$TMP_HOME" --bind "$PWD" beehave_0.3.2.sif Rscript R/test_prepare_json.R
+
+mkdir -p data/input/locations
+mkdir -p data/output
+
+sbatch -J prepare scripts/submit_hq.lumi.sh R/prepare_input.R data/input/locations.json
+sbatch -J run     scripts/submit_hq.lumi.sh R/run_beehave.R   data/input/netlogo.json
+```
