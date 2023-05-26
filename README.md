@@ -51,6 +51,6 @@ singularity exec --home "$TMP_HOME" --bind "$PWD" beehave_0.3.2.sif Rscript R/te
 mkdir -p data/input/locations
 mkdir -p data/output
 
-sbatch -J prepare scripts/submit_hq.lumi.sh R/prepare_input.R data/input/locations.json
-sbatch -J run     scripts/submit_hq.lumi.sh R/run_beehave.R   data/input/netlogo.json
+sbatch -J prepare -N 10 -t 1:00:00 scripts/submit_hq.lumi.sh R/prepare_input.R data/input/locations.json
+sbatch -J run     -N 10 -t 1:00:00 scripts/submit_hq.lumi.sh R/run_beehave.R   data/input/netlogo.json
 ```
