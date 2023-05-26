@@ -54,6 +54,7 @@ data/locations/*.txt
 slurm-*.out
 *.stdout
 *.stderr
+*.zip
 
 # Singularity image
 *.sif
