@@ -21,7 +21,7 @@ BeehaveInput <- function(LSCMap, BeeLocation, NPData, PolygonSize=200000, buffer
   RefCRS <- crs(LSCMap, parse = FALSE)
   
   # create buffer around Beehave Locations...
-  clipBuffer <- buffer(BeeLocation, width = 5000)
+  clipBuffer <- buffer(BeeLocation, width = buffer_size)
   
   # ... and clip raster to buffer
   LocationArea <- crop(LSCMap, clipBuffer)
