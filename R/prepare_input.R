@@ -46,28 +46,9 @@ NPData <- read.csv(user_params$nectar_pollen_lookup_path)
 # Call Input generator with different patch sizes ----
 input_patches <- BeehaveInput(LSCMap, BeeLocation, NPData, user_params$buffer_size)[[1]]
 
-# Aggregate all patches into one ----
-input_All <- input_patches %>% group_by(day) %>%
-  summarise(
-    id = 0,
-    oldPatchID = 0,
-    PatchType = "All",
-    distance = mean(distance_m),
-    xcor = 0,
-    ycor = 0,
-    size_sqm = sum(size_sqm),
-    quantityPollen_g = sum(quantityPollen_g),
-    concentration = mean(concentration),
-    quantityNectar_l = sum(quantityNectar_l),
-    calculatedDetectionProb_per_trip = mean(calculatedDetectionProb_per_trip),
-    modelledDetectionProb_per_trip = 0,
-    nectarGathering_s = 1200,
-    pollenGathering_s = 600
-  )
-
 # Write files ----
 write.table(
-  input_All,
+  input_patches,
   paste0(user_params$location_path, "/input_", user_params$id, ".txt"),
   sep = " ",
   row.names = FALSE
