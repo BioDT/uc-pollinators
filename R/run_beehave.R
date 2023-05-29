@@ -12,7 +12,7 @@ nl <- nlrx::nl(
   nlversion = Sys.getenv("NETLOGO_VERSION"),
   nlpath = file.path(Sys.getenv("NETLOGO_HOME")),
   modelpath = file.path(Sys.getenv("MODEL_PATH")),
-  jvmmem = 1024
+  jvmmem = 7168
 )
 
 # Set default parameter values ----
