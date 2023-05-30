@@ -7,6 +7,9 @@ library(dplyr)
 library(lubridate)
 library(rdwd)
 
+# Define rdwd download location to reduce network load
+options(rdwdlocdir="data/input/DWDdata")
+
 # Source functions ----
 source("R/fct_input.R")
 
