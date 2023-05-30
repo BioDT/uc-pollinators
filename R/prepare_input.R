@@ -47,7 +47,7 @@ BeeLocation <- vect(
 NPData <- read.csv(user_params$nectar_pollen_lookup_path)
 
 # Call Input generator with different patch sizes ----
-input_patches <- BeehaveInput(LSCMap, BeeLocation, NPData, user_params$buffer_size)[[1]]
+input_patches <- BeehaveInput(LSCMap, BeeLocation, NPData, 200000, user_params$buffer_size)[[1]]
 
 # Write files ----
 write.table(
