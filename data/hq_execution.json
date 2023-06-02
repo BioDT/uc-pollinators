@@ -10,10 +10,10 @@
         ],
         "variables": {
             "N_INITIAL_BEES": {
-                "values": [10000, 10000, 10000]
+                "values": [10000]
             },
             "MAX_HONEY_STORE_kg": {
-                "values": [50, 50, 50]
+                "values": [50]
             }
         },
         "constants": {
@@ -33,10 +33,10 @@
         ],
         "variables": {
             "N_INITIAL_BEES": {
-                "values": [10000, 10000, 10000]
+                "values": [10000]
             },
             "MAX_HONEY_STORE_kg": {
-                "values": [50, 50, 50]
+                "values": [50]
             }
         },
         "constants": {
