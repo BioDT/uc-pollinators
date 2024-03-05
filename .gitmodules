@@ -1,0 +1,6 @@
+[submodule "uc-pollinators-container"]
+	path = container
+	url = git@github.com:BioDT/uc-pollinators-container.git
+[submodule "uc-pollinators-beehave"]
+	path = beehave
+	url = git@github.com:BioDT/uc-pollinators-beehave.git
