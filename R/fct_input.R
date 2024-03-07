@@ -1,3 +1,10 @@
+###### R - script to create input (resources and weather) files to run the BEEHAVE model
+# main contributor Anna Wendt, University of Freiburg
+# contributor of an earlier version of the WeatherDataInput() function Okan Özsoy
+# modifications have been done by Jürgen Groeneveld, Tomas Martinovic, Tuomas Rossi 
+# the pollination pDT has benefitted from the work of the pollination pDT team
+
+
 # Libraries ----
 library(terra)
 library(sf)
@@ -231,47 +238,69 @@ SpatialVaryingInput <- function(input, monthlyProb){
 # Function to create a weatherinput file for the beehave model
 WeatherDataInput <- function(input){
   
-  #convert the data to the right CRS
-  TrachtnetConv <- project(input,"+init=epsg:4326")
-  Coordinates <- crds(TrachtnetConv)
-  Point_lat <- Coordinates[2]
-  Point_lon <- Coordinates[1]
+  # transform input coordinates to degrees
+  TrachtnetConv <- project(input,"epsg:4326")
+  Coordinates <- as.data.frame(crds(TrachtnetConv))
   
-  #Read the station data
-  WeatherStations <-nearbyStations(Point_lat,Point_lon,50,
-                                   res="daily",var="kl",per="historical",mindate="2016-12-31")
+  # Read the station data
+  WeatherStations <- nearbyStations(
+    Coordinates$y, 
+    Coordinates$x, 
+    radius = 50,
+    res="daily",var="kl",per="historical",mindate="2016-12-31") %>%
+    # select only stations that started measuring before 2016
+    filter(von_datum < as.Date("2016-01-01", "%Y-%m-%d")) 
   
-  #create a loop to check through the stations
-  i <- 2
-  for (i in 2:nrow(WeatherStations)){
-    link <- WeatherStations$url[i]
-    link <- gsub("2020","2021",link)
-    file <- dataDWD(link, read = FALSE, quiet= TRUE)
-    clim <- readDWD(file, varnames = TRUE, quiet=TRUE)
-    clim_2016 <- filter(clim, format(clim$MESS_DATUM, "%Y") == 2016)
-    ifelse (anyNA(clim_2016$SDK.Sonnenscheindauer)
-            ,(i = i+1),(break))
+  # check through the stations for NA values in data
+  for (i in 1:nrow(WeatherStations)){
+    file <- dataDWD(WeatherStations$url[i], varnames = TRUE, quiet= TRUE)
+    
+    # select only data from 2016 only
+    clim_2016 <- filter(file, format(file$MESS_DATUM, "%Y") == 2016)
+    
+    # breaks when file with no NAs in SDK found
+    if (anyNA(clim_2016$SDK.Sonnenscheindauer) == FALSE ) break 
+    
+    # if all stations contain NA values give warning
+    if (i == length(WeatherStations$Stations_id)){
+      warning(paste("Final selected weather station includes NA values. No stations found without any NA within 50km distance. Station ID:", WeatherStations$Stations_id[i]))
+    } 
   }
   
-  #save the information to look it up
-  StationInformation <- WeatherStations[i,]
+  # create the weather input file
+  WeatherData = data.frame("Station_id" = rep(WeatherStations$Stations_id[i]),
+                           "Day" = 1:365,
+                           "T_max" = clim_2016$TXK.Lufttemperatur_Max[1:365],
+                           "Sun_hours" = clim_2016$SDK.Sonnenscheindauer[1:365]) %>% 
+    # only sun hours are used, when Temp is above 15°C
+    mutate(Sun_hours = ifelse(T_max < 15, 0, Sun_hours))
   
-  #create the weather input file
-  WeatherInput_New = data.frame("Day" = 1:365,
-                                "Tmax" = clim_2016$TXK.Lufttemperatur_Max[1:365],
-                                "Sun Hours" = clim_2016$SDK.Sonnenscheindauer[1:365],
-                                check.names = FALSE)
+  # create vector for BEEHAVE weather input with sunshine hours
+  WeatherFile <- paste("[", paste(WeatherData$Sun_hours, collapse = " "), "]")
   
-  #create a vector which only contains Sun Hours
-  #if the max. temp is higher than 15?C
-  WeatherFilter <- WeatherInput_New
-  WeatherFilter$`Sun Hours`[WeatherFilter$Tmax <15]<-0
-  i <- 1
-  WeatherFile <- "["
-  for (i in 1:365) {
-    WeatherFile <- paste(WeatherFile,WeatherFilter$`Sun Hours`[i])
-  }
-  WeatherFile <- paste(WeatherFile,"]")
-  return(list(WeatherInput_New, WeatherFile))
+  return(list(WeatherData, WeatherFile))
+}
+
+
+
+##### modification of the input file allowing to discriminate the background resources of grassland and resources during summer
+# therefore there is GrasslandSeason type in the look up table now
+
+modify_Inputfile <- function(input, NPData){
+  
+  temp_start <- NPData[which(NPData$PatchType == "GrasslandSeason"),7]
+  temp_end <- NPData[which(NPData$PatchType == "GrasslandSeason"),8]
+  
+  temp_old_pollen <- NPData[which(NPData$PatchType == "Grassland"),2]
+  temp_season_pollen <- NPData[which(NPData$PatchType == "GrasslandSeason"),2]
+  
+  index <- which (input$PatchType == "Grassland" & input$day > temp_start & input$day < temp_end) 
+  input[index,]$quantityPollen_g <- input[index,]$quantityPollen_g / temp_old_pollen * temp_season_pollen
+  
+  temp_old_nectar <- NPData[which(NPData$PatchType == "Grassland"),4]
+  temp_season_nectar <- NPData[which(NPData$PatchType == "GrasslandSeason"),4]
+  
+  input[index,]$quantityNectar_l <- input[index,]$quantityNectar_l / temp_old_nectar * temp_season_nectar
+  
 }
 
