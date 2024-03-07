@@ -1,3 +1,10 @@
+###### R - script to create input (resources and weather) files to run the BEEHAVE model
+# main contributor Anna Wendt, University of Freiburg
+# contributor of an earlier version of the WeatherDataInput() function Okan Özsoy
+# modifications have been done by Jürgen Groeneveld, Tomas Martinovic, Tuomas Rossi 
+# the pollination pDT has benefitted from the work of the pollination pDT team
+
+
 # Load libraries ----
 library(tidyverse)
 # From fct_input.R
@@ -49,9 +56,13 @@ NPData <- read.csv(user_params$nectar_pollen_lookup_path)
 # Call Input generator with different patch sizes ----
 input_patches <- BeehaveInput(LSCMap, BeeLocation, NPData, 200000, user_params$buffer_size)[[1]]
 
+# allows to discriminate nectar and pollen resources from grassland during summer (patchtype = "Season") and the rest of the year (patchtype = "GrasslandRest")
+
+input_patches_modified <- modify_Inputfile (input_patches, NPData)
+
 # Write files ----
 write.table(
-  input_patches,
+  input_patches_modified,
   paste0(user_params$location_path, "/input_", user_params$id, ".txt"),
   sep = " ",
   row.names = FALSE
