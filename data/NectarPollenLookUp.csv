@@ -1,0 +1,10 @@
+PatchType,quantityPollen_g,concentration,quantityNectar_l,nectarGathering_s,pollenGathering_s,flowerStart,flowerEnd
+Rapeseed,0.13,1.3,3e-4,1200,600,114,136
+Maize,0.752,0,0,0,600,197,210
+Legumes,0.0302,1.242,1.019e-4,1200,600,142,182
+Strawberries,0.0078,1.161,5.5e-6,1200,600,135,196
+Stone Fruits,0.058,0.971,1.86e-4,1200,600,95,148
+Asparagus,0.1861,1.811,1.198e-4,1200,600,152,212
+Vines,0.91,1.71,1.33e-4,1200,600,152,227
+Grassland,0.0121,1.262,1e-5,1200,600,1,365
+GrasslandSeason,0.0121,1.262,1e-4,1200,600,151,273
