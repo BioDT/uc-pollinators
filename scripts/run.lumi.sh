@@ -2,7 +2,7 @@
 
 # Use correct file paths here
 MODEL_PATH="data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
-SIF="beehave_0.3.2.sif"
+SIF="beehave_0.3.5.sif"
 RSCRIPT="${RSCRIPT:-R/run_beehave.R}"
 
 ####################################
