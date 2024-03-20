@@ -43,6 +43,10 @@ vignettes/*.pdf
 
 # Map data
 data/map
+# Test data
+data/test
+# Test output
+data/output
 
 # Testing user scripts
 R/test.R
@@ -61,3 +65,5 @@ slurm-*.out
 
 # HyperQueue binary
 bin/hq
+
+
