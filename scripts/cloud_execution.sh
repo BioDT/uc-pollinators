@@ -34,6 +34,7 @@ docker run \
            --entrypoint /scripts/run_docker_flow.sh \
            ghcr.io/biodt/beehave:0.3.6 
 
+exit
 # 
 # docker run \
 # --rm -it \
