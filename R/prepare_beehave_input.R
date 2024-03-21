@@ -1,7 +1,7 @@
 ###### R - script to create input (resources and weather) files to run the BEEHAVE model
 # main contributor Anna Wendt, University of Freiburg
 # contributor of an earlier version of the WeatherDataInput() function Okan Özsoy
-# modifications have been done by Jürgen Groeneveld, Tomas Martinovic, Tuomas Rossi 
+# modifications have been done by Jürgen Groeneveld, Tomas Martinovic, Tuomas Rossi
 # the pollination pDT has benefitted from the work of the pollination pDT team
 
 
@@ -15,15 +15,19 @@ library(lubridate)
 library(rdwd)
 
 # Define rdwd download location to reduce network load
-options(rdwdlocdir="data/input/DWDdata")
+options(rdwdlocdir = "data/input/DWDdata")
 
 # Source functions ----
-source("R/fct_input.R")
+source("/R/fct_beehave_input.R")
 
 # Prepare input parameters ----
 args <- commandArgs(trailingOnly = TRUE)
 user_params <- args[1] |>
   jsonlite::parse_json(simplifyVector = TRUE)
+
+if (!dir.exists(user_params$location_path)) {
+  dir.create(user_params$location_path)
+}
 
 # user_parames should contain
 # id - location ID, e.g 412
@@ -31,7 +35,7 @@ user_params <- args[1] |>
 # y - longitude in EPSG:25832 CRS
 # buffer_size - size of the buffer around points (area size in map units, typically meters)
 # location_path - path to temp directory where to store inputs for computation
-# input_tif_path - path to input tif file 
+# input_tif_path - path to input tif file
 # nectar_pollen_lookup_path - path to NectarPollenLookUp.csv
 
 # Landscape Classification Map ----
@@ -43,18 +47,19 @@ RefCRS <- crs(LSCMap, parse = FALSE)
 BeeLocation <- vect(
   data.frame(
     id = user_params$id,
-    x = user_params$x,
-    y = user_params$y
+    lon = user_params$lon,
+    lat = user_params$lat
   ),
-  geom = c("x", "y"),
-  crs = "EPSG:25832"
-) |> 
+  geom = c("lon", "lat"),
+  crs = "EPSG:4326"
+) |>
   project(LSCMap)
 
 NPData <- read.csv(user_params$nectar_pollen_lookup_path)
 
 # Call Input generator with different patch sizes ----
-input_patches <- BeehaveInput(LSCMap, BeeLocation, NPData, 200000, user_params$buffer_size)[[1]]
+input_patches <-
+  BeehaveInput(LSCMap, BeeLocation, NPData, 200000, user_params$buffer_size)[[1]]
 
 # allows to discriminate nectar and pollen resources from grassland during summer (patchtype = "Season") and the rest of the year (patchtype = "GrasslandRest")
 
@@ -73,7 +78,12 @@ WeatherOutput <- WeatherDataInput(BeeLocation)
 
 write.table(
   WeatherOutput[2],
-  paste0(user_params$location_path, "/weather_", user_params$id, ".txt"),
+  paste0(
+    user_params$location_path,
+    "/weather_",
+    user_params$id,
+    ".txt"
+  ),
   quote = F,
   row.names = F,
   col.names = F
