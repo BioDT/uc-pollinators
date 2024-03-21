@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # JSON PREPARATION
-export R_PATH="R"
-export DATA_PATH="data/test"
-export SCRIPT_PATH="scripts"
+export R_PATH="$1"
+export DATA_PATH="$2" 
+export SCRIPT_PATH="$3"
 export INPUT_DIR="/data"
 export OUTPUT_DIR="/data/output"
-export MAP="preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif"
-export LOOKUP_TABLE="NectarPollenLookUp.csv"
+export MAP="map.tif"
+export LOOKUP_TABLE="lookup.csv"
 export LOCATIONS="locations.csv"
 export PARAMETERS="parameters.csv"
 #export NETLOGO_VERSION="6.3.0"
 #export NETLOGO_HOME="/NetLogo 6.3.0"
-export MODEL_PATH="/data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
+export MODEL_PATH="${INPUT_DIR}/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo" # This assumes model is put into the same folder as inputs
 export CPUS=1
 
 docker run \
