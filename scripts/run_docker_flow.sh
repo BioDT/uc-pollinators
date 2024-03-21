@@ -27,13 +27,13 @@ until hq job list &>/dev/null ; do sleep 1 ; done
 hq worker start &
 hq worker wait 1
 
-# hq submit --from-json "${INPUT_DIR}/locations.json" \
-#    --cpus "${CPUS}" \
-#     --stderr "hq-${SLURM_JOB_ID}-%{TASK_ID}.stderr" \
-#     --stdout "hq-${SLURM_JOB_ID}-%{TASK_ID}.stdout" \
-#     /scripts/prepare_beehave_input_hq_cloud.sh
-# 
-# hq job wait all
+hq submit --from-json "${INPUT_DIR}/locations.json" \
+   --cpus "${CPUS}" \
+    --stderr "hq-${SLURM_JOB_ID}-%{TASK_ID}.stderr" \
+    --stdout "hq-${SLURM_JOB_ID}-%{TASK_ID}.stdout" \
+    /scripts/prepare_beehave_input_hq_cloud.sh
+
+hq job wait all
 # Compute Beehave simulation with HyperQueue
 mkdir "${OUTPUT_DIR}"
 
