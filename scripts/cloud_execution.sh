@@ -10,8 +10,8 @@ export MAP="preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif"
 export LOOKUP_TABLE="NectarPollenLookUp.csv"
 export LOCATIONS="locations.csv"
 export PARAMETERS="parameters.csv"
-export NETLOGO_VERSION="6.3.0"
-export NETLOGO_HOME="/NetLogo 6.3.0"
+#export NETLOGO_VERSION="6.3.0"
+#export NETLOGO_HOME="/NetLogo 6.3.0"
 export MODEL_PATH="/data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
 export CPUS=1
 
