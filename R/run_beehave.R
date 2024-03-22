@@ -45,8 +45,31 @@ params <- list(
 # Rewrite default parameters by user defined ----
 params[names(user_params)] <- user_params
 
-stopifnot(file.exists(file.path("data", gsub('^.|.$', '', params$constants$INPUT_FILE))))
-stopifnot(file.exists(file.path("data", gsub('^.|.$', '', params$constants$WeatherFile))))
+remove_quotes <- function(path) {
+    # Remove possible "\""
+    if (substring(path, 1, 1) == "\"") {
+        path = substring(path, 2, nchar(path) - 1)
+    }
+    return (path)
+}
+
+check_and_fix_path <- function(path) {
+    path = remove_quotes(path)
+    # Check valid path
+    stopifnot(file.exists(path))
+    # Convert path to absolute
+    path = normalizePath(path)
+    # Add "\"" around the path
+    return (sprintf("\"%s\"", path))
+}
+
+# Define original paths without quotes
+orig_INPUT_FILE <- remove_quotes(params$constants$INPUT_FILE)
+orig_WeatherFile <- remove_quotes(params$constants$WeatherFile)
+
+# Use paths that nlrx understands
+params$constants$INPUT_FILE <- check_and_fix_path(params$constants$INPUT_FILE)
+params$constants$WeatherFile <- check_and_fix_path(params$constants$WeatherFile)
 
 # Define experiment ----
 nl@experiment <- nlrx::experiment(
@@ -68,6 +91,10 @@ nl@simdesign <- nlrx::simdesign_distinct(nl = nl,
 
 # Run experiment ----
 results <- nlrx::run_nl_all(nl = nl)
+
+# Use original paths in output
+results$INPUT_FILE <- orig_INPUT_FILE
+results$WeatherFile <- orig_WeatherFile
 
 # Store results ----
 write.table(results, file = params$outpath, sep = ",")
