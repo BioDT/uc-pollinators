@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Use correct file paths here
-MODEL_PATH="data/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
-SIF="beehave_0.3.5.sif"
+MODEL_PATH="beehave/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
+SIF="beehave_0.3.6.sif"
 RSCRIPT="${RSCRIPT:-R/run_beehave.R}"
 
 ####################################
@@ -31,4 +31,6 @@ trap "rm -rf $TMP_HOME/.java $TMP_HOME/.netlogo; rmdir $TMP_HOME" EXIT
 export MODEL_PATH
 
 # Run
-singularity exec --home "$TMP_HOME" --bind "$PWD" "$SIF" Rscript "$RSCRIPT" "$JSON_INPUT"
+export SINGULARITY_HOME="$TMP_HOME"
+export SINGULARITY_BIND="/pfs,/scratch,/projappl,/project,/flash,/appl"
+singularity exec "$SIF" Rscript "$RSCRIPT" "$JSON_INPUT"

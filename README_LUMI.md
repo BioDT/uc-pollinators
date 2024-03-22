@@ -25,6 +25,11 @@ Download hq binary release:
 
 ## Single execution
 
+Download test data (in `BEEHAVE_BeeMapp2016.zip`):
+
+    wget --content-disposition 'https://beehave-model.net/?smd_process_download=1&download_id=974'
+    unzip BEEHAVE_BeeMapp2016.zip -d test
+
 Example script:
 
     sbatch scripts/submit_single.lumi.sh

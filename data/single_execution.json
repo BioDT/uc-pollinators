@@ -1,6 +1,6 @@
 {
     "outpath": [
-        "data/output/Result_table402.csv"
+        "test/output.csv"
     ],
     "metrics": [
         "TotalIHbees + TotalForagers",
@@ -16,8 +16,8 @@
         }
     },
     "constants": {
-        "INPUT_FILE": ["\"Input_Clustertest/input_402.txt\""],
-        "WeatherFile": ["\"Input_Clustertest/weather_402.txt\""]
+        "INPUT_FILE": ["test/Sources.txt"],
+        "WeatherFile": ["test/WeatherExample.txt"]
     },
     "nseeds": [1]
 }
