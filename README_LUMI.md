@@ -23,26 +23,30 @@ Download hq binary release:
     wget https://github.com/It4innovations/hyperqueue/releases/download/v0.15.0/hq-v0.15.0-linux-x64.tar.gz -O - | tar -xzf - -C bin
 
 
-## Single execution
+## Running test case
+
+### Download test data
 
 Download test data (in `BEEHAVE_BeeMapp2016.zip`):
 
     wget --content-disposition 'https://beehave-model.net/?smd_process_download=1&download_id=974'
     unzip BEEHAVE_BeeMapp2016.zip -d test
 
-Example script:
+### Single execution
+
+Run script:
 
     sbatch scripts/submit_single.lumi.sh
 
-Standard output will come to file `slurm-*.out`.
+Standard output will go to file `slurm-*.out`.
 
-## HyperQueue execution
+### HyperQueue execution
 
-Example script:
+Run script:
 
     sbatch scripts/submit_hq.lumi.sh R/run_beehave.R data/hq_execution.json
 
-Standard output will come to files `hq-*.stdout`.
+Standard output will go to files in `hq-*.stderrout.zip`.
 
 
 ## Full-scale demo
