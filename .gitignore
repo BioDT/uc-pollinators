@@ -66,4 +66,6 @@ slurm-*.out
 # HyperQueue binary
 bin/hq
 
+# Test data
+test/
 
