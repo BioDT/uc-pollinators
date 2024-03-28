@@ -68,6 +68,7 @@ bin/hq
 
 # Test data
 test/
+APiC_Agricultural-Land-Cover-Germany_RSE-2020/
 
 # RDWD cache
 rdwd_cache/

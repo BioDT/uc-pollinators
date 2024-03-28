@@ -51,13 +51,17 @@ Standard output will go to files in `hq-*.stderrout.zip`.
 
 ## Large-scale calculation
 
+Download map (source https://doi.org/10.1594/PANGAEA.910837):
+
+   wget https://hs.pangaea.de/Maps/Germany/Preidl-etal_2020/APiC_Agricultural-Land-Cover-Germany_RSE-2020.zip
+   unzip APiC_Agricultural-Land-Cover-Germany_RSE-2020.zip
+
 Prepare data directory:
 
     mkdir -p test/large/
     cp data/NectarPollenLookUp.csv test/large/
     cp data/parameters.csv test/large/
-    cp .../preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif test/large/
-    cp .../preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif.aux.xml test/large/
+    cp APiC_Agricultural-Land-Cover-Germany_RSE-2020/preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif* test/large/
     cp .../germany_grid_10km.csv test/large/
 
 Create `locations.json` and `netlogo.json` from input files:
