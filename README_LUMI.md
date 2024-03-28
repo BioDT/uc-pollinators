@@ -73,8 +73,26 @@ Process `locations.json` to input files:
     export RDWD_CACHEDIR="$PWD/rdwd_cache"
     mkdir -p "$RDWD_CACHEDIR"
     sbatch -J beehave_prepare -N 1 -t 1:00:00 scripts/submit_hq.lumi.sh R/prepare_beehave_input.R test/large/locations.json
+    # This should take about 20 mins
 
 Run BEEHAVE model:
 
-    sbatch -J beehave_run -N 8 --cpus-per-task=32 -t 8:00:00 scripts/submit_hq.lumi.sh R/run_beehave.R data/input/netlogo.json
+    # Using the standard partition (running in parallel
+    # 64 BEEHAVE instances per node as extra RAM/instance needed;
+    # BEEHAVE uses threading too)
+    sbatch -J beehave_run -N 8 --cpus-per-task=64 -t 4:00:00 scripts/submit_hq.lumi.sh R/run_beehave.R test/large/netlogo.json
+    # This should take about 1 hour
+
+    # Alternatively twice more RAM/instance
+    sbatch -J beehave_run -N 8 --cpus-per-task=32 -t 4:00:00 scripts/submit_hq.lumi.sh R/run_beehave.R test/large/netlogo.json
+    # This should take about 1.5 hours
+
+    # Alternatively using the partition with even more RAM/instance
+    sbatch -J beehave_run -N 1 --cpus-per-task=128 -t 8:00:00 -p largemem scripts/submit_hq.lumi.sh R/run_beehave.R test/large/netlogo.json
+    # This should take about 5 hours
+
+
+### Known issues
+
+* Race condition with the shared `RDWD_CACHEDIR` and hyperqueue execution (one process might try to read cached file before other process has written it)
 
