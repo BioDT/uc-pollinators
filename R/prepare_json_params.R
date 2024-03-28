@@ -175,9 +175,9 @@ output_list <- apply(
   MARGIN = 1,
   FUN = function(x) {
     list(
-      id = x[[1]],
-      lat = x[[2]],
-      lon = x[[3]],
+      id = x[["id"]],
+      lat = x[["lat"]],
+      lon = x[["lon"]],
       buffer_size = inputs$buffer,
       location_path = file.path(inputs$input_dir, "locations"),
       input_tif_path = input_tif_path,
