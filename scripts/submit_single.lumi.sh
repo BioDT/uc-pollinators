@@ -3,6 +3,7 @@
 #SBATCH --partition=small
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=8G
 #SBATCH --time=00:15:00
 
 # Use correct file paths here
