@@ -59,6 +59,7 @@ slurm-*.out
 *.stdout
 *.stderr
 *.zip
+hq-server-*/
 
 # Singularity image
 *.sif
