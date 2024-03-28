@@ -15,7 +15,10 @@ library(lubridate)
 library(rdwd)
 
 # Define rdwd download location to reduce network load
-options(rdwdlocdir = "data/input/DWDdata")
+RDWD_CACHEDIR = Sys.getenv("RDWD_CACHEDIR")
+if (RDWD_CACHEDIR != "") {
+  options(rdwdlocdir = RDWD_CACHEDIR)
+}
 
 # Source functions ----
 source("/R/fct_beehave_input.R")
