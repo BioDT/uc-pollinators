@@ -258,8 +258,9 @@ WeatherDataInput <- function(input){
     # select only data from 2016 only
     clim_2016 <- filter(file, format(file$MESS_DATUM, "%Y") == 2016)
     
+    
     # breaks when file with no NAs in SDK found
-    if (anyNA(clim_2016$SDK.Sonnenscheindauer) == FALSE ) break 
+    if (anyNA(clim_2016$SDK.Sonnenscheindauer) == FALSE & length(clim_2016$SDK.Sonnenscheindauer) > 0) break 
     
     # if all stations contain NA values give warning
     if (i == length(WeatherStations$Stations_id)){
@@ -291,10 +292,14 @@ modify_Inputfile <- function(input, NPData){
   temp_start <- NPData[which(NPData$PatchType == "GrasslandSeason"),7]
   temp_end <- NPData[which(NPData$PatchType == "GrasslandSeason"),8]
   
+  if (length(temp_start) == 0 | length(temp_end) == 0) {
+    return(input)
+  }
+  
   temp_old_pollen <- NPData[which(NPData$PatchType == "Grassland"),2]
   temp_season_pollen <- NPData[which(NPData$PatchType == "GrasslandSeason"),2]
   
-  index <- which (input$PatchType == "Grassland" & input$day > temp_start & input$day < temp_end) 
+  index <- which(input$PatchType == "Grassland" & input$day > temp_start & input$day < temp_end) 
   input[index,]$quantityPollen_g <- input[index,]$quantityPollen_g / temp_old_pollen * temp_season_pollen
   
   temp_old_nectar <- NPData[which(NPData$PatchType == "Grassland"),4]

@@ -32,10 +32,10 @@ if (!dir.exists(user_params$location_path)) {
   dir.create(user_params$location_path)
 }
 
-# user_parames should contain
+# user_params should contain
 # id - location ID, e.g 412
-# x - latitude in EPSG:25832 CRS
-# y - longitude in EPSG:25832 CRS
+# x - latitude in EPSG:4326 CRS
+# y - longitude in EPSG:4326 CRS
 # buffer_size - size of the buffer around points (area size in map units, typically meters)
 # location_path - path to temp directory where to store inputs for computation
 # input_tif_path - path to input tif file

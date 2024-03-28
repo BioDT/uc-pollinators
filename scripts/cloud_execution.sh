@@ -7,7 +7,7 @@ export SCRIPT_PATH="$3"
 export INPUT_DIR="/data"
 export OUTPUT_DIR="/data/output"
 export MAP="map.tif"
-export LOOKUP_TABLE="lookup.csv"
+export LOOKUP_TABLE="lookup_table.csv"
 export LOCATIONS="locations.csv"
 export PARAMETERS="parameters.csv"
 #export NETLOGO_VERSION="6.3.0"
@@ -25,8 +25,6 @@ docker run \
            -e LOOKUP_TABLE="${LOOKUP_TABLE}" \
            -e LOCATIONS="${LOCATIONS}" \
            -e PARAMETERS="${PARAMETERS}" \
-           -e NETLOGO_VERION="${NETLOGO_VERSION}" \
-           -e NETLOGO_HOME="${NETLOGO_HOME}" \
            -e MODEL_PATH="${MODEL_PATH}" \
            -e CPUS="${CPUS}" \
            --cpus "${CPUS}" \

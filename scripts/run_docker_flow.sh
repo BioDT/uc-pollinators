@@ -14,7 +14,7 @@ Rscript R/prepare_json_params.R \
 # https://docs.csc.fi/apps/hyperqueue/
 
 # HyperQueue server directory
-export HQ_SERVER_DIR="${PWD}/hq-server-${SLURM_JOB_ID}"
+export HQ_SERVER_DIR="${PWD}/hq-server"
 mkdir -p "${HQ_SERVER_DIR}"
 
 # Remove the server directory at exit
@@ -29,8 +29,8 @@ hq worker wait 1
 
 hq submit --from-json "${INPUT_DIR}/locations.json" \
    --cpus "${CPUS}" \
-    --stderr "hq-${SLURM_JOB_ID}-%{TASK_ID}.stderr" \
-    --stdout "hq-${SLURM_JOB_ID}-%{TASK_ID}.stdout" \
+    --stderr "${INPUT_DIR}/hq-%{TASK_ID}.stderr" \
+    --stdout "${INPUT_DIR}/hq-%{TASK_ID}.stdout" \
     /scripts/prepare_beehave_input_hq_cloud.sh
 
 hq job wait all
@@ -38,11 +38,10 @@ hq job wait all
 mkdir "${OUTPUT_DIR}"
 
 hq submit \
-    --log="${INPUT_DIR}/hq_log" \
     --from-json "${INPUT_DIR}/netlogo.json" \
     --cpus "${CPUS}" \
-    --stderr "hq-${SLURM_JOB_ID}-%{TASK_ID}.stderr" \
-    --stdout "hq-${SLURM_JOB_ID}-%{TASK_ID}.stdout" \
+    --stderr "${INPUT_DIR}/hq-beehave-%{TASK_ID}.stderr" \
+    --stdout "${INPUT_DIR}/hq-beehave-%{TASK_ID}.stdout" \
     --env NETLOGO_VERION="${NETLOGO_VERSION}" \
     --env NETLOGO_HOME="${NETLOGO_HOME}" \
     --env MODEL_PATH="${MODEL_PATH}" \

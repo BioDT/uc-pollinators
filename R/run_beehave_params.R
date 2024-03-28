@@ -35,10 +35,26 @@ inputs <- optparse::parse_args(
   convert_hyphens_to_underscores = TRUE
 )$options
 
-# Parse input parametersc
+# Parse input parameters
 user_params <- inputs$user_parameters |>
   jsonlite::parse_json(simplifyVector = TRUE)
 
+# inputs <- list()
+# inputs$netlogo_version <- "6.3.0"
+# inputs$netlogo_home <- "~/data/BioDT/beehave/NetLogo 6.3.0/"
+# Sys.setenv(JAVA_HOME="/Users/martinovic/data/BioDT/beehave/jdk-17.0.6.jdk/Contents/Home")
+# inputs$model_path <- "~/git/biodt-prod/shared/v2Ye7Nqwr/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
+# user_params <- jsonlite::read_json(path = "/Users/martinovic/git/biodt-prod/shared/v2Ye7Nqwr/netlogo.json", simplifyVector = TRUE)
+
+if (!is.null(user_params$variables$HoneyHarvesting)) {
+  user_params$variables$HoneyHarvesting <- user_params$variables$HoneyHarvesting |> as.logical()
+}
+if (!is.null(user_params$variables$VarroaTreatment)) {
+  user_params$variables$VarroaTreatment <- user_params$variables$VarroaTreatment |> as.logical()
+}
+if (!is.null(user_params$variables$DroneBroodRemoval)) {
+  user_params$variables$DroneBroodRemoval <- user_params$variables$DroneBroodRemoval |> as.logical()
+}
 
 # Sys.setenv("JAVA_HOME" = "/Users/martinovic/data/BioDT/beehave/jdk-17.0.6.jdk/Contents/Home/")
 # inputs <- list()
@@ -83,8 +99,12 @@ params <- list(
 )
 
 # Rewrite default parameters by user defined ----
-user_params$variables <- purrr::map(user_params$variables, ~list(values = .x))
+user_params$variables <- purrr::map(user_params$variables, ~list(values = .x |> unlist() |> unname()))
 params[names(user_params)] <- user_params
+
+params$variables$HoneyHarvesting <- NULL
+params$variables$VarroaTreatment <- NULL
+params$variables$DroneBroodRemoval <- NULL
 
 stopifnot(file.exists(gsub('^.|.$', '', params$constants$INPUT_FILE)))
 stopifnot(file.exists(gsub(
