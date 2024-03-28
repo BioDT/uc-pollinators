@@ -23,7 +23,7 @@ Download hq binary release:
     wget https://github.com/It4innovations/hyperqueue/releases/download/v0.15.0/hq-v0.15.0-linux-x64.tar.gz -O - | tar -xzf - -C bin
 
 
-## Running test case
+## A test case
 
 ### Download test data
 
@@ -44,7 +44,7 @@ Standard output will go to file `slurm-*.out`.
 
 Run script:
 
-    sbatch scripts/submit_hq.lumi.sh R/run_beehave.R data/hq_execution.json
+    sbatch -p small --cpus-per-task=2 --mem-per-cpu=8G -t 0:15:00 scripts/submit_hq.lumi.sh R/run_beehave.R data/hq_execution.json
 
 Standard output will go to files in `hq-*.stderrout.zip`.
 

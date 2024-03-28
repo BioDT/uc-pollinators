@@ -1,10 +1,9 @@
 #!/bin/bash -l
 #SBATCH -J test
-#SBATCH --partition=small
+#SBATCH --partition=ju-standard
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=2
-#SBATCH --mem-per-cpu=8G
+#SBATCH --cpus-per-task=128
 #SBATCH --time=00:15:00
 
 RSCRIPT=$1
