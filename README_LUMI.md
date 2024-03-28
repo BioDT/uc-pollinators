@@ -66,7 +66,7 @@ Create `locations.json` and `netlogo.json` from input files:
 
 Process `locations.json` to input files:
 
-    export RDWD_CACHEDIR="test/large/rdwd_cache"
+    export RDWD_CACHEDIR="$PWD/rdwd_cache"
     mkdir -p "$RDWD_CACHEDIR"
     sbatch -J beehave_prepare -N 1 -t 1:00:00 scripts/submit_hq.lumi.sh R/prepare_beehave_input.R test/large/locations.json
 

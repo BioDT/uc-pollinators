@@ -69,3 +69,6 @@ bin/hq
 # Test data
 test/
 
+# RDWD cache
+rdwd_cache/
+
