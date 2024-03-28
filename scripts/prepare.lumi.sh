@@ -2,8 +2,8 @@
 
 # Use correct file paths here
 SIF="beehave_0.3.6.sif"
-INPUT_DPATH="test/large"
-OUTPUT_DPATH="test/large/output"
+INPUT_DPATH="${1:-test/large}"
+OUTPUT_DPATH="$INPUT_DPATH/results"
 
 ####################################
 # No need to edit the lines below

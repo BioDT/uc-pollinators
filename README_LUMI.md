@@ -62,7 +62,7 @@ Prepare data directory:
 
 Create `locations.json` and `netlogo.json` from input files:
 
-    bash scripts/prepare.lumi.sh
+    bash scripts/prepare.lumi.sh test/large
 
 Process `locations.json` to input files:
 
