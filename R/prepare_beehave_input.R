@@ -42,6 +42,8 @@ if (!dir.exists(user_params$location_path)) {
 # nectar_pollen_lookup_path - path to NectarPollenLookUp.csv
 
 # Landscape Classification Map ----
+stopifnot(file.exists(user_params$input_tif_path))
+stopifnot(file.exists(paste0(user_params$input_tif_path, ".aux.xml")))
 LSCMap <-
   rast(user_params$input_tif_path)
 
