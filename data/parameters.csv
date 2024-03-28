@@ -1,0 +1,3 @@
+Parameter,Value,Default.Value
+N_INITIAL_BEES,10000,
+MAX_HONEY_STORE_kg,50,

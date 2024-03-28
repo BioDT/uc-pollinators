@@ -49,18 +49,28 @@ Run script:
 Standard output will go to files in `hq-*.stderrout.zip`.
 
 
-## Full-scale demo
+## Large-scale calculation
 
-Details of execution:
+Prepare data directory:
 
-    export TMP_HOME=`mktemp -d -p /tmp`
-    mkdir -p $TMP_HOME/.java/.userPrefs
+    mkdir -p test/large/
+    cp data/NectarPollenLookUp.csv test/large/
+    cp data/parameters.csv test/large/
+    cp .../preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif test/large/
+    cp .../preidl-etal-RSE-2020_land-cover-classification-germany-2016.tif.aux.xml test/large/
+    cp .../germany_grid_10km.csv test/large/
 
-    singularity exec --home "$TMP_HOME" --bind "$PWD" beehave_0.3.2.sif Rscript R/test_prepare_json.R
+Create `locations.json` and `netlogo.json` from input files:
 
-    mkdir -p data/input/locations
-    mkdir -p data/output
+    bash scripts/prepare.lumi.sh
 
-    sbatch -J prepare -N 10 -t 1:00:00 scripts/submit_hq.lumi.sh R/prepare_input.R data/input/locations.json
-    sbatch -J run     -N 2  -t 8:00:00 --cpus-per-task=32 scripts/submit_hq.lumi.sh R/run_beehave.R data/input/netlogo.json
+Process `locations.json` to input files:
+
+    export RDWD_CACHEDIR="test/large/rdwd_cache"
+    mkdir -p "$RDWD_CACHEDIR"
+    sbatch -J beehave_prepare -N 1 -t 1:00:00 scripts/submit_hq.lumi.sh R/prepare_beehave_input.R test/large/locations.json
+
+Run BEEHAVE model:
+
+    sbatch -J beehave_run -N 8 --cpus-per-task=32 -t 8:00:00 scripts/submit_hq.lumi.sh R/run_beehave.R data/input/netlogo.json
 

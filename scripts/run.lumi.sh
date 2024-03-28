@@ -33,4 +33,5 @@ export MODEL_PATH
 # Run
 export SINGULARITY_HOME="$TMP_HOME"
 export SINGULARITY_BIND="/pfs,/scratch,/projappl,/project,/flash,/appl"
+export SINGULARITY_BIND="$SINGULARITY_BIND,R:/R"  # some scripts source from /R
 singularity exec "$SIF" Rscript "$RSCRIPT" "$JSON_INPUT"
