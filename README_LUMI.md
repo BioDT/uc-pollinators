@@ -27,7 +27,7 @@ Download hq binary release:
 
 ### Download test data
 
-Download test data (in `BEEHAVE_BeeMapp2016.zip`):
+Download `BEEHAVE_BeeMapp2016.zip` with test data from https://beehave-model.net/download/. Direct link:
 
     wget --content-disposition 'https://beehave-model.net/?smd_process_download=1&download_id=974'
     unzip BEEHAVE_BeeMapp2016.zip -d test
