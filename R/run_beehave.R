@@ -43,6 +43,7 @@ params <- list(
 )
 
 # Rewrite default parameters by user defined ----
+user_params$variables <- purrr::map(user_params$variables, ~list(values = .x))
 params[names(user_params)] <- user_params
 
 remove_quotes <- function(path) {
