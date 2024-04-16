@@ -1,27 +1,35 @@
-# Load libraries -----
-library(nlrx)
-library(jsonlite)
+# Import functions ----
+box::use(
+  optparse[OptionParser, add_option, parse_args],
+  nlrx[nl, experiment, simdesign_distinct, run_nl_all],
+  jsonlite[parse_json],
+  purrr[map],
+  stringr[str_split],
+  stats[na.omit],
+  dplyr[mutate],
+  readr[read_file],
+)
 
 # Define command line arguments ----
 
-parser <- optparse::OptionParser() |>
-  optparse::add_option(c("-p", "--user-parameters"),
+parser <- OptionParser() |>
+  add_option(c("-p", "--user-parameters"),
                        type = "character",
-                       help = "JSON containing parameters for the beehave simulation. See run_beehave.R for structure.") |>
-  optparse::add_option(
+                       help = "JSON containing parameters for the beehave simulation. See run_beehave_3.R for structure.") |>
+  add_option(
     c("-v", "--netlogo-version"),
     type = "character",
     default = "6.3.0",
     help = "Netlogo version [default %default]"
   ) |>
-  optparse::add_option(
+  add_option(
     c("-n", "--netlogo-home"),
     type = "character",
     action = "store",
     default = "/NetLogo",
     help = "Netlogo home path [default %default]"
   ) |>
-  optparse::add_option(
+  add_option(
     c("-m", "--model-path"),
     type = "character",
     action = "store",
@@ -29,7 +37,7 @@ parser <- optparse::OptionParser() |>
     help = "Path to Beehave model file [default %default]"
   )
 
-inputs <- optparse::parse_args(
+inputs <- parse_args(
   parser,
   positional_arguments = TRUE,
   convert_hyphens_to_underscores = TRUE
@@ -37,12 +45,12 @@ inputs <- optparse::parse_args(
 
 # Parse input parameters
 user_params <- inputs$user_parameters |>
-  jsonlite::parse_json(simplifyVector = TRUE)
+  parse_json(simplifyVector = TRUE)
 
 # inputs <- list()
 # inputs$netlogo_version <- "6.3.0"
 # inputs$netlogo_home <- "~/data/BioDT/beehave/NetLogo 6.3.0/"
-# Sys.setenv(JAVA_HOME="/Users/martinovic/data/BioDT/beehave/jdk-17.0.6.jdk/Contents/Home")
+# Sys.setenv(JAVA_HOME="~/data/BioDT/beehave/jdk-17.0.6.jdk/Contents/Home")
 # inputs$model_path <- "~/git/biodt-prod/shared/v2Ye7Nqwr/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
 # user_params <- jsonlite::read_json(path = "/Users/martinovic/git/biodt-prod/shared/v2Ye7Nqwr/netlogo.json", simplifyVector = TRUE)
 
@@ -56,17 +64,8 @@ if (!is.null(user_params$variables$DroneBroodRemoval)) {
   user_params$variables$DroneBroodRemoval <- user_params$variables$DroneBroodRemoval |> as.logical()
 }
 
-# Sys.setenv("JAVA_HOME" = "/Users/martinovic/data/BioDT/beehave/jdk-17.0.6.jdk/Contents/Home/")
-# inputs <- list()
-# user_params <- jsonlite::read_json("data/test/netlogo.json",
-#                                    simplifyVector = TRUE)
-# inputs$netlogo_version <- "6.2.0"
-# inputs$netlogo_home <- "~/data/BioDT/beehave/NetLogo6.2.0/"
-# inputs$model_path <-
-#   "data/test/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo"
-
 # Create nl object which hold info on NetLogo version and model path.
-nl <- nlrx::nl(
+nl <- nl(
   nlversion = inputs$netlogo_version,
   nlpath = inputs$netlogo_home,
   modelpath = inputs$model_path,
@@ -99,20 +98,22 @@ params <- list(
 )
 
 # Rewrite default parameters by user defined ----
-user_params$variables <- purrr::map(user_params$variables, ~list(values = .x |> unlist() |> unname()))
+user_params$variables <- map(user_params$variables, ~list(values = .x |> unlist() |> unname()))
 params[names(user_params)] <- user_params
 
 params$variables$HoneyHarvesting <- NULL
 params$variables$VarroaTreatment <- NULL
 params$variables$DroneBroodRemoval <- NULL
 
-stopifnot(file.exists(gsub('^.|.$', '', params$constants$INPUT_FILE)))
-stopifnot(file.exists(gsub(
+input_file <- gsub('^.|.$', '', params$constants$INPUT_FILE)
+weather_file <- gsub(
   '^.|.$', '', params$constants$WeatherFile
-)))
+)
+stopifnot(file.exists(input_file))
+stopifnot(file.exists(weather_file))
 # print("passed_file_check")
 # Define experiment ----
-nl@experiment <- nlrx::experiment(
+nl@experiment <- experiment(
   expname = params$experiment_name,
   outpath = params$outpath,
   repetition = params$repetition,
@@ -126,11 +127,26 @@ nl@experiment <- nlrx::experiment(
 )
 
 # Experiment design ----
-nl@simdesign <- nlrx::simdesign_distinct(nl = nl,
-                                         nseeds = params$nseeds)
+nl@simdesign <- simdesign_distinct(nl = nl,
+                                   nseeds = params$nseeds)
 
+# Load weather data ----
+weather <- read_file(weather_file) |>
+  str_split(" ",
+            simplify = TRUE
+  ) |>
+  as.integer() |>
+  na.omit()
+
+print(weather)
+
+weather <- rep(weather, 10)
+print(weather)
 # Run experiment ----
-results <- nlrx::run_nl_all(nl = nl)
+results <- run_nl_all(nl = nl)
+
+results <- results |>
+  mutate(weather = weather[1:nrow(results)])
 
 # Store results ----
 write.table(results,

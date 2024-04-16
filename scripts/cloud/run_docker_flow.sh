@@ -1,7 +1,10 @@
 #!/bin/bash
 
+export R_BOX_PATH="/"
+export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+
 # Prepare JSON
-Rscript R/prepare_json_params.R \
+Rscript /R/step1_hq/step1_prepare_hq_jsons.R \
         -i "${INPUT_DIR}" \
         -o "${OUTPUT_DIR}" \
         -m "${MAP}" \
@@ -31,7 +34,8 @@ hq submit --from-json "${INPUT_DIR}/locations.json" \
    --cpus "${CPUS}" \
     --stderr "${INPUT_DIR}/hq-%{TASK_ID}.stderr" \
     --stdout "${INPUT_DIR}/hq-%{TASK_ID}.stdout" \
-    /scripts/prepare_beehave_input_hq_cloud.sh
+    --env R_BOX_PATH=${R_BOX_PATH} \
+    /scripts/step2_prepare_beehave_input_hq_cloud.sh
 
 hq job wait all
 # Compute Beehave simulation with HyperQueue
@@ -45,7 +49,9 @@ hq submit \
     --env NETLOGO_VERION="${NETLOGO_VERSION}" \
     --env NETLOGO_HOME="${NETLOGO_HOME}" \
     --env MODEL_PATH="${MODEL_PATH}" \
-    /scripts/run_beehave_hq_cloud.sh
+    --env R_BOX_PATH=${R_BOX_PATH} \
+    --env JAVA_HOME=${JAVA_HOME} \
+    /scripts/step3_run_beehave_hq_cloud.sh
 
 # Wait until all jobs have finished, shut down the HyperQueue workers and server
 hq job wait all

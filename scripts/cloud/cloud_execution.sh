@@ -30,7 +30,7 @@ docker run \
            --cpus "${CPUS}" \
            --platform linux/amd64 \
            --entrypoint /scripts/run_docker_flow.sh \
-           ghcr.io/biodt/beehave:0.3.6 
+           ghcr.io/biodt/beehave:0.3.7 
 
 exit
 # 
