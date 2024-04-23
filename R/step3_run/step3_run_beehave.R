@@ -104,6 +104,7 @@ params[names(user_params)] <- user_params
 params$variables$HoneyHarvesting <- NULL
 params$variables$VarroaTreatment <- NULL
 params$variables$DroneBroodRemoval <- NULL
+params$runtime <- user_params$sim_days
 
 input_file <- gsub('^.|.$', '', params$constants$INPUT_FILE)
 weather_file <- gsub(
@@ -145,8 +146,14 @@ print(weather)
 # Run experiment ----
 results <- run_nl_all(nl = nl)
 
+start_date <- user_params$start_day[[1]] |>
+  as.Date()
+
 results <- results |>
-  mutate(weather = weather[1:nrow(results)])
+  mutate(weather = weather[1:nrow(results)],
+         date = seq(from = start_date,
+                    to = start_date + user_params$sim_days[[1]],
+                    by = "day"))
 
 # Store results ----
 write.table(results,
