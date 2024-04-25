@@ -79,7 +79,14 @@ write.table(
 )
 
 # Create weather input for beehave and write file ----
-WeatherOutput <- weather_data_input(bee_location)
+
+to_date <- user_params$start_day |>
+  as.Date() + user_params$sim_days
+print(to_date)
+
+WeatherOutput <- weather_data_input(bee_location,
+                                    from_date = user_params$start_day,
+                                    to_date = to_date)
 
 write.table(
   WeatherOutput[2],

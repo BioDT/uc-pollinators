@@ -16,21 +16,21 @@ export MODEL_PATH="${INPUT_DIR}/Beehave_BeeMapp2015_Netlogo6version_PolygonAggre
 export CPUS=1
 
 docker run \
-           -v "$PWD/${SCRIPT_PATH}":"/scripts" \
-           -v "$PWD/${R_PATH}":"/R" \
-           -v "$PWD/${DATA_PATH}":"${INPUT_DIR}" \
-           -e INPUT_DIR="${INPUT_DIR}" \
-           -e OUTPUT_DIR="${OUTPUT_DIR}" \
-           -e MAP="${MAP}" \
-           -e LOOKUP_TABLE="${LOOKUP_TABLE}" \
-           -e LOCATIONS="${LOCATIONS}" \
-           -e PARAMETERS="${PARAMETERS}" \
-           -e MODEL_PATH="${MODEL_PATH}" \
-           -e CPUS="${CPUS}" \
-           --cpus "${CPUS}" \
-           --platform linux/amd64 \
-           --entrypoint /scripts/run_docker_flow.sh \
-           ghcr.io/biodt/beehave:0.3.7 
+ -v "$PWD/${SCRIPT_PATH}":"/scripts" \
+ -v "$PWD/${R_PATH}":"/R" \
+ -v "$PWD/${DATA_PATH}":"${INPUT_DIR}" \
+ -e INPUT_DIR="${INPUT_DIR}" \
+ -e OUTPUT_DIR="${OUTPUT_DIR}" \
+ -e MAP="${MAP}" \
+ -e LOOKUP_TABLE="${LOOKUP_TABLE}" \
+ -e LOCATIONS="${LOCATIONS}" \
+ -e PARAMETERS="${PARAMETERS}" \
+ -e MODEL_PATH="${MODEL_PATH}" \
+ -e CPUS="${CPUS}" \
+ --cpus "${CPUS}" \
+ --platform linux/amd64 \
+ --entrypoint /scripts/run_docker_flow.sh \
+ ghcr.io/biodt/beehave:0.3.7 
 
 exit
 # 

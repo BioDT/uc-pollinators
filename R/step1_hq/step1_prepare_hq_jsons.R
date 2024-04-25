@@ -51,6 +51,13 @@ parser <- OptionParser() |>
     help = "Name of parameters file [default %default]"
   ) |>
   add_option(
+    c("-s", "--simulation"),
+    type = "character",
+    action = "store",
+    default = "simulation.csv",
+    help = "Name of simulation parameter file [default %default]"
+  ) |>
+  add_option(
     c("-b", "--buffer"),
     type = "integer",
     default = 5000L,
@@ -101,5 +108,6 @@ beehave_prepare_hq_json(
     lookup_table = inputs$lookup_table,
     locations = inputs$locations,
     parameters = inputs$parameter,
+    simulation = inputs$simulation,
     buffer = inputs$buffer,
     iteration = inputs$iteration)
