@@ -13,7 +13,7 @@ box::use(
 # Define command line arguments ----
 
 parser <- OptionParser() |>
-  add_option(c("-p", "--user-parameters"),
+  add_option(c("-u", "--user-parameters"),
                        type = "character",
                        help = "JSON containing parameters for the beehave simulation. See run_beehave_3.R for structure.") |>
   add_option(
@@ -138,10 +138,7 @@ weather <- read_file(weather_file) |>
   as.integer() |>
   na.omit()
 
-print(weather)
-
 weather <- rep(weather, 10)
-print(weather)
 # Run experiment ----
 results <- run_nl_all(nl = nl)
 
