@@ -28,7 +28,7 @@ beehave_input <- function(input_map,
                           bee_location,
                           lookup_table,
                           polygon_size = 200000,
-                          buffer_size = 5000,
+                          buffer_size = 3000,
                           beehave_levels = c(
                             "Maize",
                             "Legumes",
@@ -184,7 +184,9 @@ beehave_input <- function(input_map,
         )
       )
   }
-
+  
+  # InputTable <- InputTable |>
+  #   filter(distance_m < buffer_size )
   # return both Input File and Polygons
   return(list(InputTable, location_area_poly))
 }

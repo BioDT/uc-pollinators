@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export R_BOX_PATH="/"
-export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+# export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
 # Prepare JSON
 Rscript /R/step1_hq/step1_prepare_hq_jsons.R \
@@ -46,11 +46,9 @@ hq submit \
     --cpus "${CPUS}" \
     --stderr "${INPUT_DIR}/hq-beehave-%{TASK_ID}.stderr" \
     --stdout "${INPUT_DIR}/hq-beehave-%{TASK_ID}.stdout" \
-    --env NETLOGO_VERION="${NETLOGO_VERSION}" \
-    --env NETLOGO_HOME="${NETLOGO_HOME}" \
+    --env NETLOGO_JAR_PATH="${NETLOGO_JAR_PATH}" \
     --env MODEL_PATH="${MODEL_PATH}" \
     --env R_BOX_PATH=${R_BOX_PATH} \
-    --env JAVA_HOME=${JAVA_HOME} \
     /scripts/step3_run_beehave_hq_cloud.sh
 
 # Wait until all jobs have finished, shut down the HyperQueue workers and server

@@ -36,7 +36,7 @@ beehave_prepare_hq_json <- function(
                         id = "i",
                         lat = "d",
                         lon = "d"
-                      ))
+                      )) 
   
   parameters <- 
     read_csv(
@@ -45,6 +45,26 @@ beehave_prepare_hq_json <- function(
         Parameter = col_character(),
         Value = col_double(),
         `Default.Value` = col_skip()
+      )
+    ) |>
+    rbind(
+      data.frame(
+        Parameter = c("INPUT_FILE",
+                      "WeatherFile",
+                      "random-seed"),
+        Value = c(paste0(
+          "\"",
+          input_dir,
+          "/locations",
+          "/input_1.txt\""
+        ),
+        paste0(
+          "\"",
+          input_dir,
+          "/locations",
+          "/weather_1.txt\""
+        ),
+        sample(1:100000, 1))
       )
     )
   
@@ -102,25 +122,6 @@ beehave_prepare_hq_json <- function(
           "PollenStore_g"
         ),
         variables = parameters_list,
-        constants = list(
-          "INPUT_FILE" = paste0(
-            "\"",
-            input_dir,
-            "/locations",
-            "/input_",
-            x[[1]],
-            ".txt\""
-          ),
-          "WeatherFile" = paste0(
-            "\"",
-            input_dir,
-            "/locations",
-            "/weather_",
-            x[[1]],
-            ".txt\""
-          )
-        ),
-        nseeds = 1L,
         sim_days = simulation_df$sim_days[[1]],
         start_day = simulation_df$start_day[[1]]
       )
@@ -128,6 +129,8 @@ beehave_prepare_hq_json <- function(
   )
   
   write_json(netlogo_list,
-             path = file.path(input_dir, "netlogo.json"))
+             path = file.path(input_dir, "netlogo.json"),
+             simplifyVector = TRUE,
+             auto_unbox = TRUE)
 
 }
