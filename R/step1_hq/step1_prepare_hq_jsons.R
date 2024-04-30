@@ -60,7 +60,7 @@ parser <- OptionParser() |>
   add_option(
     c("-b", "--buffer"),
     type = "integer",
-    default = 5000L,
+    default = 3000L,
     help = "Buffer size in map units, typically meters [default %default]"
   ) |>
   # add_option(

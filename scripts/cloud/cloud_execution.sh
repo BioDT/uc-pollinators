@@ -10,6 +10,7 @@ export MAP="map.tif"
 export LOOKUP_TABLE="lookup_table.csv"
 export LOCATIONS="locations.csv"
 export PARAMETERS="parameters.csv"
+export NETLOGO_JAR_PATH="/NetLogo 6.3.0/lib/app/netlogo-6.3.0.jar"
 #export NETLOGO_VERSION="6.3.0"
 #export NETLOGO_HOME="/NetLogo 6.3.0"
 export MODEL_PATH="${INPUT_DIR}/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo" # This assumes model is put into the same folder as inputs
@@ -26,11 +27,12 @@ docker run \
  -e LOCATIONS="${LOCATIONS}" \
  -e PARAMETERS="${PARAMETERS}" \
  -e MODEL_PATH="${MODEL_PATH}" \
+ -e NETLOGO_JAR_PATH="${NETLOGO_JAR_PATH}" \
  -e CPUS="${CPUS}" \
  --cpus "${CPUS}" \
  --platform linux/amd64 \
  --entrypoint /scripts/run_docker_flow.sh \
- ghcr.io/biodt/beehave:0.3.7 
+ ghcr.io/biodt/beehave:0.3.9
 
 exit
 # 
