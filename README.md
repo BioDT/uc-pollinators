@@ -1,3 +1,3 @@
-# BioDT Pollinators pDT
+# BioDT Honeybee pDT / Pollinators UC
 
-This repository contains the code developed for the Pollinators pDT within the BioDT project.
+This repository contains codes for the Honeybee pDT developed within the Pollinators use case in the BioDT project.
