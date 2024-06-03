@@ -53,8 +53,8 @@ Standard output will go to files in `hq-*.stderrout.zip`.
 
 Download map (source https://doi.org/10.1594/PANGAEA.910837):
 
-   wget https://hs.pangaea.de/Maps/Germany/Preidl-etal_2020/APiC_Agricultural-Land-Cover-Germany_RSE-2020.zip
-   unzip APiC_Agricultural-Land-Cover-Germany_RSE-2020.zip
+    wget https://hs.pangaea.de/Maps/Germany/Preidl-etal_2020/APiC_Agricultural-Land-Cover-Germany_RSE-2020.zip
+    unzip APiC_Agricultural-Land-Cover-Germany_RSE-2020.zip
 
 Prepare data directory:
 
