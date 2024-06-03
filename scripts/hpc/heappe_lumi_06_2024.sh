@@ -10,6 +10,7 @@ export R_BOX_PATH="/"
 # export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
 # Prepare JSON
+# Need to make this run in singularity !!!!!
 Rscript /R/step1_hq/step1_prepare_hq_jsons.R \
 -i "${INPUT_DIR}" \
 -o "${OUTPUT_DIR}" \
@@ -42,7 +43,7 @@ hq submit --from-json "${INPUT_DIR}/locations.json" \
 --stderr "${INPUT_DIR}/hq-%{TASK_ID}.stderr" \
 --stdout "${INPUT_DIR}/hq-%{TASK_ID}.stdout" \
 --env R_BOX_PATH=${R_BOX_PATH} \
-/scripts/step2_prepare_beehave_input_hq_cloud.sh # Adjust script for use on HPC with singularity container
+/scripts/step2_prepare_beehave_input_hq_cloud.sh # Adjust script for use on HPC with singularity container !!!!!!
 
 hq job wait all
 # Compute Beehave simulation with HyperQueue
@@ -56,7 +57,7 @@ hq submit \
 --env NETLOGO_JAR_PATH="${NETLOGO_JAR_PATH}" \
 --env MODEL_PATH="${MODEL_PATH}" \
 --env R_BOX_PATH=${R_BOX_PATH} \
-/scripts/step3_run_beehave_hq_cloud.sh # Adjust script for use on HPC with singularity container
+/scripts/step3_run_beehave_hq_cloud.sh # Adjust script for use on HPC with singularity container !!!!!!!
 
 # Wait until all jobs have finished, shut down the HyperQueue workers and server
 hq job wait all
