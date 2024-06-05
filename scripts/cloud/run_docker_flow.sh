@@ -10,7 +10,8 @@ Rscript /R/step1_hq/step1_prepare_hq_jsons.R \
         -m "${MAP}" \
         -t "${LOOKUP_TABLE}" \
         -l "${LOCATIONS}" \
-        -p "${PARAMETERS}"
+        -p "${PARAMETERS}" \
+        -s "${SIMULATIONS}"
 
 # Prepare input files with HyperQueue
 # This is based on
