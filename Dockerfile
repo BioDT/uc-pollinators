@@ -40,5 +40,8 @@ ENV JAVA_HOME=/usr/lib64/jvm/java-$JAVA_VERSION-openjdk-$JAVA_VERSION \
     PATH=/usr/bin:$PATH \
     LC_ALL=C.UTF-8
 
-ENTRYPOINT ["Rscript"]
+COPY R /R
+COPY scripts /scripts
+
+ENTRYPOINT ["/scripts/cloud/run_docker_flow.sh"]
 CMD ["--help"]

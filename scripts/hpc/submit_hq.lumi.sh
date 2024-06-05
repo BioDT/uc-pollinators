@@ -6,22 +6,19 @@
 #SBATCH --cpus-per-task=128
 #SBATCH --time=00:15:00
 
-RSCRIPT=$1
-HQ_JSON_INPUT_PATH=$2
+export R_BOX_PATH="/"
+# export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
-# Use correct file paths here
-RUN="./scripts/run.lumi.sh"
+# Prepare JSON
+Rscript /R/step1_hq/step1_prepare_hq_jsons.R \
+-i "${INPUT_DIR}" \
+-o "${OUTPUT_DIR}" \
+-m "${MAP}" \
+-t "${LOOKUP_TABLE}" \
+-l "${LOCATIONS}" \
+-p "${PARAMETERS}"
 
-# Make RSCRIPT visible for runner script
-export RSCRIPT
-
-# Add hq to PATH
-export PATH="$PWD/bin:$PATH"
-
-####################################
-# No need to edit the lines below
-####################################
-
+# Prepare input files with HyperQueue
 # This is based on
 # https://docs.csc.fi/apps/hyperqueue/
 
@@ -34,18 +31,32 @@ trap "rm -rf ${HQ_SERVER_DIR}" EXIT
 
 # Start the server in the background (&) and wait until it has started
 hq server start &
-until hq job list &>/dev/null ; do sleep 1 ; done
+  until hq job list &>/dev/null ; do sleep 1 ; done
 
 # Start the workers (one per node, in the background) and wait until they have started
 srun --exact --cpu-bind=none --mpi=none hq worker start --cpus=${SLURM_CPUS_PER_TASK} &
-hq worker wait "${SLURM_NTASKS}"
+  hq worker wait "${SLURM_NTASKS}"
 
-# Run the script with HyperQueue
-hq submit --from-json "$HQ_JSON_INPUT_PATH" \
-    --cpus 1 \
-    --stderr "hq-${SLURM_JOB_ID}-%{TASK_ID}.stderr" \
-    --stdout "hq-${SLURM_JOB_ID}-%{TASK_ID}.stdout" \
-    "$RUN"
+hq submit --from-json "${INPUT_DIR}/locations.json" \
+--cpus "${CPUS}" \
+--stderr "${INPUT_DIR}/hq-%{TASK_ID}.stderr" \
+--stdout "${INPUT_DIR}/hq-%{TASK_ID}.stdout" \
+--env R_BOX_PATH=${R_BOX_PATH} \
+/scripts/step2_prepare_beehave_input_hq_cloud.sh
+
+hq job wait all
+# Compute Beehave simulation with HyperQueue
+mkdir "${OUTPUT_DIR}"
+
+hq submit \
+--from-json "${INPUT_DIR}/netlogo.json" \
+--cpus "${CPUS}" \
+--stderr "${INPUT_DIR}/hq-beehave-%{TASK_ID}.stderr" \
+--stdout "${INPUT_DIR}/hq-beehave-%{TASK_ID}.stdout" \
+--env NETLOGO_JAR_PATH="${NETLOGO_JAR_PATH}" \
+--env MODEL_PATH="${MODEL_PATH}" \
+--env R_BOX_PATH=${R_BOX_PATH} \
+/scripts/step3_run_beehave_hq_cloud.sh
 
 # Wait until all jobs have finished, shut down the HyperQueue workers and server
 hq job wait all
