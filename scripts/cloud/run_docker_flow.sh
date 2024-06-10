@@ -36,7 +36,7 @@ hq submit --from-json "${INPUT_DIR}/locations.json" \
     --stderr "${INPUT_DIR}/hq-%{TASK_ID}.stderr" \
     --stdout "${INPUT_DIR}/hq-%{TASK_ID}.stdout" \
     --env R_BOX_PATH=${R_BOX_PATH} \
-    /scripts/step2_prepare_beehave_input_hq_cloud.sh
+    /scripts/cloud/step2_prepare_beehave_input_hq_cloud.sh
 
 hq job wait all
 # Compute Beehave simulation with HyperQueue
@@ -50,7 +50,7 @@ hq submit \
     --env NETLOGO_JAR_PATH="${NETLOGO_JAR_PATH}" \
     --env MODEL_PATH="${MODEL_PATH}" \
     --env R_BOX_PATH=${R_BOX_PATH} \
-    /scripts/step3_run_beehave_hq_cloud.sh
+    /scripts/cloud/step3_run_beehave_hq_cloud.sh
 
 # Wait until all jobs have finished, shut down the HyperQueue workers and server
 hq job wait all
