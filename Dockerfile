@@ -33,6 +33,10 @@ ADD $NETLOGO_FILE /
 ARG HQ_FILE
 ADD $HQ_FILE /usr/bin/
 
+# Prepare input/output folder
+RUN mkdir -p /input
+RUN mkdir -p /output
+
 ENV JAVA_HOME=/usr/lib64/jvm/java-$JAVA_VERSION-openjdk-$JAVA_VERSION \
     NETLOGO_HOME="/NetLogo $NETLOGO_VERSION" \
     NETLOGO_VERSION=$NETLOGO_VERSION \

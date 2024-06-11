@@ -10,7 +10,7 @@ export MAP="map.tif"
 export LOOKUP_TABLE="lookup_table.csv"
 export LOCATIONS="locations.csv"
 export PARAMETERS="parameters.csv"
-export SIMULATIONS="simulations.csv"
+export SIMULATIONS="simulation.csv"
 export NETLOGO_JAR_PATH="/NetLogo 6.3.0/lib/app/netlogo-6.3.0.jar"
 #export NETLOGO_VERSION="6.3.0"
 #export NETLOGO_HOME="/NetLogo 6.3.0"
@@ -18,7 +18,7 @@ export MODEL_PATH="${INPUT_DIR}/Beehave_BeeMapp2015_Netlogo6version_PolygonAggre
 export CPUS=1
 
 docker run \
- -v "$PWD/${DATA_PATH}":"${INPUT_DIR}" \
+ -v "${PWD}/${DATA_PATH}":"${INPUT_DIR}" \
  -e INPUT_DIR="${INPUT_DIR}" \
  -e OUTPUT_DIR="${OUTPUT_DIR}" \
  -e MAP="${MAP}" \
@@ -35,7 +35,7 @@ docker run \
  ghcr.io/biodt/beehave:0.3.10
 
 exit
-# 
+# /scripts/cloud/run_docker_flow.sh
 # docker run \
 # --rm -it \
 #            -v "$PWD/${SCRIPT_PATH}":"/scripts" \
