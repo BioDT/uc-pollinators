@@ -40,7 +40,7 @@ trap "rm -rf ${HQ_SERVER_DIR}" EXIT
 hq server start &
 until hq job list &>/dev/null ; do sleep 1 ; done
 
-hq worker start &
+hq worker start --manager none &
 hq worker wait 1
 
 hq submit --from-json "${INPUT_DIR}/locations.json" \
