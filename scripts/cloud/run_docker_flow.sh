@@ -3,17 +3,37 @@
 export R_BOX_PATH="/"
 # export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
-export DATA_FOLDER="$1"
-export INPUT_DIR="/input/${DATA_FOLDER}"
-export OUTPUT_DIR="/output"
-export MAP="map.tif"
-export LOOKUP_TABLE="lookup_table.csv"
-export LOCATIONS="locations.csv"
-export PARAMETERS="parameters.csv"
-export SIMULATIONS="simulation.csv"
-export NETLOGO_JAR_PATH="/NetLogo 6.3.0/lib/app/netlogo-6.3.0.jar"
-export MODEL_PATH="${INPUT_DIR}/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo" # This assumes model is put into the same folder as inputs
-export CPUS=1
+#export DATA_FOLDER="$1"
+if [[ -z "${INPUT_DIR}" ]]; then
+    export INPUT_DIR="/input/$1"
+fi
+if [[ -z "${OUTPUT_DIR}" ]]; then
+    export OUTPUT_DIR="/output"
+fi
+if [[ -z "${MAP}" ]]; then
+    export MAP="map.tif"
+fi
+if [[ -z "${LOOKUP_TABLE}" ]]; then
+    export LOOKUP_TABLE="lookup_table.csv"
+fi
+if [[ -z "${LOCATIONS}" ]]; then
+    export LOCATIONS="locations.csv"
+fi
+if [[ -z "${PARAMETERS}" ]]; then
+    export PARAMETERS="parameters.csv"
+fi
+if [[ -z "${SIMULATIONS}" ]]; then
+    export SIMULATIONS="simulation.csv"
+fi
+if [[ -z "${NETLOGO_JAR_PATH}" ]]; then
+    export NETLOGO_JAR_PATH="/NetLogo 6.3.0/lib/app/netlogo-6.3.0.jar"
+fi
+if [[ -z "${MODEL_PATH}" ]]; then
+    export MODEL_PATH="${INPUT_DIR}/Beehave_BeeMapp2015_Netlogo6version_PolygonAggregation.nlogo" # This assumes model is put into the same folder as inputs
+fi
+if [[ -z "${CPUS}" ]]; then
+    export CPUS=1
+fi
 
 # Prepare JSON
 Rscript /R/step1_hq/step1_prepare_hq_jsons.R \
@@ -68,3 +88,5 @@ hq submit \
 hq job wait all
 hq worker stop all
 hq server stop
+
+exit
