@@ -8,6 +8,8 @@
 box::use(
   terra[crds, project],
   dplyr[mutate, filter, pull, left_join, rename, select, slice, n],
+  purrr[map_chr],
+  stringr[str_replace_all],
   rdwd[nearbyStations, dataDWD],
   lubridate[as_date],
 )
@@ -29,7 +31,11 @@ weather_data_input <- function(bee_location,
     res = "daily", var = "kl", per = "historical", mindate = to_date
   ) |>
     # select only stations that started measuring before 2016
-    filter(von_datum < from_date)
+    filter(von_datum < from_date) |>
+    # change urls to https
+    mutate(
+      url = map_chr(url,
+      function(x){str_replace_all(x, "ftp://", "https://")})) 
   
   # check through the stations for NA values in data
   for (i in 1:nrow(WeatherStations)) {
