@@ -4,9 +4,9 @@ FROM rocker/r-base:4.3.0
 RUN apt-get update -y && apt-get install -y  make pandoc zlib1g-dev git libicu-dev libpng-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libxml2-dev libudunits2-dev && rm -rf /var/lib/apt/lists/*
 
 # Java
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 ARG JAVA_VERSION
-ENV JAVA_HOME /usr/lib/jvm/java-$JAVA_VERSION-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-$JAVA_VERSION-openjdk-amd64
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y install openjdk-$JAVA_VERSION-jre-headless && \
@@ -21,7 +21,7 @@ RUN R -e 'remotes::install_version("renv", version = "1.0.3")'
 
 # Restore renv environment
 COPY renv.lock renv.lock
-ENV RENV_PATHS_LIBRARY renv/library
+ENV RENV_PATHS_LIBRARY=renv/library
 RUN R -e 'renv::restore()'
 
 # NetLogo
