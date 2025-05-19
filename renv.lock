@@ -107,27 +107,28 @@
     },
     "bit": {
       "Package": "bit",
-      "Version": "4.0.5",
+      "Version": "4.6.0",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
         "R"
       ],
-      "Hash": "d242abec29412ce988848d0294b208fd"
+      "Hash": "ebe86ffd194564abdc895d87742d5a29"
     },
     "bit64": {
       "Package": "bit64",
-      "Version": "4.0.5",
+      "Version": "4.6.0-1",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
         "R",
         "bit",
+        "graphics",
         "methods",
         "stats",
         "utils"
       ],
-      "Hash": "9fe98599ca456d6552421db0d6772d8f"
+      "Hash": "4f572fbc586294afff277db583b9060f"
     },
     "box": {
       "Package": "box",
@@ -458,20 +459,20 @@
     },
     "rdwd": {
       "Package": "rdwd",
-      "Version": "1.8.6",
+      "Version": "1.8.25",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "rdwd",
       "RemoteUsername": "brry",
       "RemoteRef": "HEAD",
-      "RemoteSha": "bc287ad35d023e4df74073412ba567108058210e",
+      "RemoteSha": "6612f17c458a66d8ab78754f232ef23b38ef07c3",
       "Requirements": [
         "R",
         "berryFunctions",
         "pbapply"
       ],
-      "Hash": "4936d11575fba4729721287a27733312"
+      "Hash": "7123c9561d852cc98616fe92f3082d7e"
     },
     "readr": {
       "Package": "readr",
@@ -554,7 +555,7 @@
     },
     "stringi": {
       "Package": "stringi",
-      "Version": "1.8.3",
+      "Version": "1.8.7",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
@@ -563,7 +564,7 @@
         "tools",
         "utils"
       ],
-      "Hash": "058aebddea264f4c99401515182e656a"
+      "Hash": "2b56088e23bdd58f89aebf43a0913457"
     },
     "stringr": {
       "Package": "stringr",
@@ -726,13 +727,13 @@
     },
     "wk": {
       "Package": "wk",
-      "Version": "0.9.1",
+      "Version": "0.9.4",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
         "R"
       ],
-      "Hash": "5d4545e140e36476f35f20d0ca87963e"
+      "Hash": "37be35d733130f1de1ef51672cf7cdc0"
     }
   }
 }

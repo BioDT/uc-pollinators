@@ -18,9 +18,11 @@ build: Dockerfile NetLogo-${NETLOGO_VERSION}-64.tgz hq-${HQ_VERSION}-linux-x64.t
 		--build-arg HQ_FILE=$(word 3, $^) \
 		-t ${IMAGE_ROOT}/${IMAGE}:${IMAGE_VERSION} \
 		.
+	docker tag ${IMAGE_ROOT}/${IMAGE}:${IMAGE_VERSION} ${IMAGE_ROOT}/${IMAGE}:latest
 
 push:
 	docker push ${IMAGE_ROOT}/${IMAGE}:${IMAGE_VERSION}
+	docker push ${IMAGE_ROOT}/${IMAGE}:latest
 
 singularity:
 	rm -f $(IMAGE).sif $(IMAGE).tar
