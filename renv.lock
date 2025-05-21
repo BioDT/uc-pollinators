@@ -459,20 +459,20 @@
     },
     "rdwd": {
       "Package": "rdwd",
-      "Version": "1.8.25",
+      "Version": "1.8.29",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "rdwd",
       "RemoteUsername": "brry",
       "RemoteRef": "HEAD",
-      "RemoteSha": "6612f17c458a66d8ab78754f232ef23b38ef07c3",
+      "RemoteSha": "b649ec093c8fa5c905f8ac25d9fbef3be79d8e37",
       "Requirements": [
         "R",
         "berryFunctions",
         "pbapply"
       ],
-      "Hash": "7123c9561d852cc98616fe92f3082d7e"
+      "Hash": "c6327b0a97f6da2eb790e4b5d4d10f25"
     },
     "readr": {
       "Package": "readr",
